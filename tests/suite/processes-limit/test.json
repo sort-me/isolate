@@ -9,7 +9,7 @@
   },
 
   "limits": {
-    "time": 1,
-    "processes": 32768
+    "time": 0.5,
+    "processes": 64
   }
 }
