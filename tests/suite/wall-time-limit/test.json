@@ -1,0 +1,14 @@
+{
+  "build": "/usr/bin/g++ solution.cpp -O0 -o solution",
+  "run": "./solution",
+  "stdin": "",
+
+  "expected": {
+    "stdout": "",
+    "status": "TO"
+  },
+
+  "limits": {
+    "wall_time": 0.5
+  }
+}
