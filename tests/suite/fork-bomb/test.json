@@ -4,11 +4,12 @@
   "stdin": "",
 
   "expected": {
-    "exitcode": "0"
+    "stdout": "",
+    "status": "TO"
   },
 
   "limits": {
-    "time": 0.2,
-    "processes": 50
+    "time": 0.5,
+    "processes": 64
   }
 }

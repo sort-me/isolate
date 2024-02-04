@@ -1,14 +1,23 @@
-/*
- *	Process Isolator -- Test Suite
- *
- *	(c) 2024 Sort Me <guys@sort-me.org>
- */
-
+#include <stdio.h>
 #include <unistd.h>
 
-int main(int argc, char **argv) {
-    // Fork forever
-    while (true) {
-        fork();
+const int EXCEPTED_PROCESSES_LIMIT = 50;
+
+int main() {
+    for (int i = 0; i < EXCEPTED_PROCESSES_LIMIT; i++) {
+        switch (fork()) {
+            case 0:
+                for (;;) {
+                    pause();
+                }
+            case -1:
+                fprintf(stderr, "Failed to fork at process %d\n", i);
+                if (i == (EXCEPTED_PROCESSES_LIMIT - 1)) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+        }
     }
+    return 1;
 }
