@@ -10,6 +10,7 @@ import sys
 import json
 import random
 import shlex
+from concurrent.futures import ThreadPoolExecutor
 from string import ascii_letters
 from threading import Thread
 from dataclasses import dataclass
@@ -172,7 +173,11 @@ def get_default_build_args() -> list[str]:
     ]
 
 
+success_tests = 0
+
+
 def run_test(name: str, box_id: int, test: Test):
+    global success_tests
     meta_filename = "meta-" + "".join([random.choice(ascii_letters) for _ in range(10)])
 
     try:
@@ -287,6 +292,7 @@ def run_test(name: str, box_id: int, test: Test):
             print_failure(name, f"Expected status: {test.expected.status} Got: {meta.status}", meta_filename)
             return
 
+        success_tests += 1
         print_success(name)
 
     except Exception as e:
@@ -299,5 +305,8 @@ def run_test(name: str, box_id: int, test: Test):
         subprocess.run(["isolate", "--box-id", str(box_id), "--cg", "--cleanup"], text=True)
 
 
-for i, name in enumerate(tests):
-    run_test(name, i, parse_test(f"./suite/{name}/test.json"))
+with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+    for i, name in enumerate(tests):
+        executor.submit(run_test, name, i, parse_test(f"./suite/{name}/test.json"))
+
+print(f"Ran {len(tests)} tests, {success_tests} succeeded.")
