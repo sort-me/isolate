@@ -1,0 +1,15 @@
+{
+  "build": "/usr/bin/g++ solution.cpp -O0 -o solution",
+  "run": "./solution",
+  "stdin": "2 3",
+
+  "expected": {
+    "stdout": "5",
+    "exitcode": "0"
+  },
+
+  "limits": {
+    "time": 1,
+    "mem": 16000
+  }
+}
