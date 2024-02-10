@@ -1,0 +1,15 @@
+{
+  "build": "/usr/bin/g++ solution.cpp -o solution",
+  "run": "./solution",
+  "stdin": "",
+
+  "expected": {
+    "stdout": "OK",
+    "status": "SG",
+    "exitsig": 25
+  },
+
+  "limits": {
+    "fsize": 256
+  }
+}
