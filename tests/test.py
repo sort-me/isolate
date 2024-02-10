@@ -213,8 +213,6 @@ def run_test(name: str, box_id: int, test: Test):
                 shutil.copytree(f"./suite/{name}/files/{fn}", box_path + "/box/" + fn)
 
         if test.build:
-            print("run build", test.build)
-
             build_command: list[str] = [
                 "isolate",
                 f"--box-id={box_id}",
@@ -246,8 +244,6 @@ def run_test(name: str, box_id: int, test: Test):
             "--",
             *shlex.split(test.run),
         ]
-
-        print("running", name)
 
         run_result = subprocess.run(
             run_command,
