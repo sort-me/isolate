@@ -68,10 +68,10 @@ class Meta:
 
 @dataclass
 class Test:
-    build: str
     run: str
+    stdin: str = ""
 
-    stdin: str
+    build: str = None
 
     @dataclass
     class Limits:
@@ -85,13 +85,13 @@ class Test:
         processes: int = None
         quota: str = None
 
-    limits: Limits
+    limits: Limits = None
 
     @dataclass
     class Excepted(Meta):
         stdout: str = None
 
-    expected: Excepted
+    expected: Excepted = None
 
 
 def print_success(test_name: str):
@@ -207,9 +207,14 @@ def run_test(name: str, box_id: int, test: Test):
 
         # Copy test /files to the box
         for fn in os.listdir(f"./suite/{name}/files"):
-            shutil.copy(f"./suite/{name}/files/{fn}", box_path + "/box")
+            if os.path.isfile(f"./suite/{name}/files/{fn}"):
+                shutil.copy(f"./suite/{name}/files/{fn}", box_path + "/box")
+            else:
+                shutil.copytree(f"./suite/{name}/files/{fn}", box_path + "/box/" + fn)
 
-        if test.build != "":
+        if test.build:
+            print("run build", test.build)
+
             build_command: list[str] = [
                 "isolate",
                 f"--box-id={box_id}",
@@ -241,6 +246,8 @@ def run_test(name: str, box_id: int, test: Test):
             "--",
             *shlex.split(test.run),
         ]
+
+        print("running", name)
 
         run_result = subprocess.run(
             run_command,
