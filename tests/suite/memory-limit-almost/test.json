@@ -1,0 +1,14 @@
+{
+  "build": "/usr/bin/g++ solution.cpp -O0 -o solution",
+  "run": "./solution",
+  "stdin": "",
+
+  "expected": {
+    "stdout": "Memory allocated and filled",
+    "exitcode": "0"
+  },
+
+  "limits": {
+    "mem": 32768
+  }
+}
