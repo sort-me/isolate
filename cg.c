@@ -3,6 +3,7 @@
  *
  *	(c) 2012-2023 Martin Mares <mj@ucw.cz>
  *	(c) 2012-2014 Bernard Blackham <bernard@blackham.com.au>
+ *	(c) 2024 Stephan Gomer <me@sadfun.org>
  */
 
 #include "isolate.h"
@@ -15,6 +16,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/mount.h>
 
 static char cg_name[256];
 
@@ -194,7 +196,25 @@ cg_init(void)
     }
 
   if (!dir_exists(cf_cg_root))
-    die("Control group root %s does not exist", cf_cg_root);
+    {
+      mkdir(cf_cg_root, 0777);
+      if (mount("cgroup2", cf_cg_root, "cgroup2", 0, NULL) < 0)
+            die("Cannot mount cgroup filesystem: %m");
+    }
+
+    char *path = xsprintf("%s/cgroup.subtree_control", cf_cg_root);
+    char *value = "+memory";
+
+    int fd = open(path, O_WRONLY);
+    if (fd == -1) {
+        die("Could not open cgroup.subtree_control file");
+    }
+
+    if (write(fd, value, strlen(value)) == -1) {
+        die("Could not write to cgroup.subtree_control file: %m");
+    }
+
+    close(fd);
 
   snprintf(cg_name, sizeof(cg_name), "box-%d", box_id);
 

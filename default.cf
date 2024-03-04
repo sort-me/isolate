@@ -9,10 +9,8 @@ box_root = /var/local/lib/isolate
 lock_root = /run/isolate/locks
 
 # Control group under which we place our subgroups
-# Either an explicit path to a subdirectory in cgroupfs, or "auto:file" to read
-# the path from "file", where it is put by isolate-cg-helper.
-# cg_root = /sys/fs/cgroup/isolate.slice/isolate.service
-cg_root = auto:/run/isolate/cgroup
+# Either an explicit path to a subdirectory in cgroupfs, or "auto:file" to read the path from "file".
+cg_root = /sys/fs/cgroup/isolate
 
 # Block of UIDs and GIDs reserved for sandboxes
 first_uid = 60000
@@ -24,6 +22,3 @@ num_boxes = 1000
 
 # Per-box settings of the set of allowed CPUs and NUMA nodes
 # (see linux/Documentation/cgroups/cpusets.txt for precise syntax)
-
-#box0.cpus = 4-7
-#box0.mems = 1
