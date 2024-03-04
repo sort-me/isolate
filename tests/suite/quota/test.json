@@ -1,0 +1,13 @@
+{
+  "run": "/usr/bin/python3 solution.py",
+  "stdin": "",
+
+  "expected": {
+    "stdout": "OK",
+    "exitsig": 0
+  },
+
+  "limits": {
+    "quota": "32,8"
+  }
+}
