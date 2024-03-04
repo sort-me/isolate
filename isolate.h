@@ -59,6 +59,7 @@ int set_dir_action(char *arg);
 void apply_dir_rules(int with_defaults);
 
 void set_quota(void);
+void quota_remove(void);
 
 /* cg.c */
 

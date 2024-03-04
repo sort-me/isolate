@@ -541,3 +541,26 @@ set_quota(void)
 
   free(dev);
 }
+
+
+void
+quota_remove(void)
+{
+    if (!block_quota)
+    return;
+
+    char cwd[PATH_MAX];
+    if (!getcwd(cwd, sizeof(cwd)))
+    die("getcwd: %m");
+
+    char *dev = find_device(cwd);
+    if (!dev)
+    die("Cannot identify filesystem which contains %s", cwd);
+    msg("Quota: Mapped path %s to a filesystem on %s\n", cwd, dev);
+
+    if (quotactl(QCMD(Q_SYNC, USRQUOTA), dev, 0, NULL) < 0)
+    die("Cannot sync disk quota: %m");
+    msg("Quota: Synced disk quota\n");
+
+    free(dev);
+}

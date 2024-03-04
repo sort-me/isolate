@@ -940,6 +940,7 @@ do_cleanup(void)
       rmtree(box_dir);
     }
   cg_remove();
+  quota_remove();
 }
 
 static void
