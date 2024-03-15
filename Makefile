@@ -1,8 +1,9 @@
 # Makefile for Isolate
 # (c) 2015--2024 Martin Mares <mj@ucw.cz>
 # (c) 2017 Bernard Blackham <bernard@blackham.com.au>
+# (c) 2024 Sort Me <guys@sort-me.org>
 
-all: isolate isolate.1 isolate.1.html isolate-check-environment isolate-cg-keeper
+all: isolate isolate.1 isolate.1.html isolate-check-environment
 
 CC=gcc
 CFLAGS=-std=gnu99 -Wall -Wextra -Wno-parentheses -Wno-unused-result -Wno-missing-field-initializers -Wstrict-prototypes -Wmissing-prototypes -D_GNU_SOURCE
@@ -31,15 +32,11 @@ SYSTEMD_LIBS := $(shell pkg-config libsystemd --libs)
 isolate: isolate.o util.o rules.o cg.o config.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 
-isolate-cg-keeper: isolate-cg-keeper.o config.o util.o
-	$(CC) $(LDFLAGS) -o $@ $^ $(SYSTEMD_LIBS)
-
 %.o: %.c isolate.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 isolate.o: CFLAGS += -DVERSION='"$(VERSION)"' -DYEAR='"$(YEAR)"' -DBUILD_DATE='"$(BUILD_DATE)"' -DBUILD_COMMIT='"$(BUILD_COMMIT)"'
 config.o: CFLAGS += -DCONFIG_FILE='"$(CONFIG)"'
-isolate-cg-keeper.o: CFLAGS += $(SYSTEMD_CFLAGS)
 
 isolate.1: isolate.1.txt
 	a2x -f manpage $<
@@ -51,14 +48,13 @@ isolate.1.html: isolate.1.txt isolate.1
 
 clean:
 	rm -f *.o
-	rm -f isolate isolate-cg-keeper
+	rm -f isolate
 	rm -f isolate.1 isolate.1.html
 	rm -f docbook-xsl.css
 
-install: isolate isolate-check-environment isolate-cg-keeper
+install: isolate isolate-check-environment
 	install -d $(BINDIR) $(SBINDIR) $(BOXDIR) $(CONFIGDIR)
 	install isolate-check-environment $(BINDIR)
-	install isolate-cg-keeper $(SBINDIR)
 	install -m 4755 isolate $(BINDIR)
 	install -m 644 default.cf $(CONFIG)
 

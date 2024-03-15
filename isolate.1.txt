@@ -377,10 +377,6 @@ For control group mode:
 - Make sure that Isolate's configuration file refers to the correct location where
   you have the cgroup filesystem mounted.
 
-- If you are using systemd, you need to start the `isolate.service`. It establishes
-  `isolate.scope` whose cgroup subtree is delegated to Isolate by systemd.
-  The service runs a simple daemon `isolate-cg-keeper` to keep the scope alive.
-
 - Reporting memory usage requires Linux kernel 5.19 or newer.
 
 - Since memory limits do not affect swapped-out data, we recommend turning off
