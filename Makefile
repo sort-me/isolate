@@ -1,6 +1,7 @@
 # Makefile for Isolate
 # (c) 2015--2024 Martin Mares <mj@ucw.cz>
 # (c) 2017 Bernard Blackham <bernard@blackham.com.au>
+# (c) 2024 Sort Me <guys@sort-me.org>
 
 all: isolate isolate.1 isolate.1.html isolate-check-environment
 
@@ -47,7 +48,7 @@ isolate.1.html: isolate.1.txt isolate.1
 
 clean:
 	rm -f *.o
-	rm -f isolate isolate-cg-keeper
+	rm -f isolate
 	rm -f isolate.1 isolate.1.html
 	rm -f docbook-xsl.css
 
