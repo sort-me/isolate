@@ -3,7 +3,7 @@ ISOLATE(1)
 
 ## Name
 
-*`isolate`* - Isolate a process using Linux Containers
+**`isolate`** - Isolate a process using Linux Containers
 
 ## Synopsis
 
