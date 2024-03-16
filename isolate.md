@@ -3,15 +3,15 @@ ISOLATE(1)
 
 ## Name
 
-isolate - Isolate a process using Linux Containers
+*`isolate`* - Isolate a process using Linux Containers
 
 ## Synopsis
 
-*isolate* 'options' *--init*
+`isolate <options> --init`
 
-*isolate* 'options' *--run* +--+ 'program' 'arguments'
+`isolate <options> --run -- <program> <arguments>`
 
-*isolate* 'options' *--cleanup*
+`isolate <options> --cleanup`
 
 ## Description
 
