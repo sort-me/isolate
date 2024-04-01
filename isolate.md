@@ -22,19 +22,19 @@ by contestants in a controlled environment.
 
 The sandbox is used in the following way:
 
-* Run *isolate --init*, which initializes the sandbox, creates its working directory and
+* Run `isolate --init`, which initializes the sandbox, creates its working directory and
 prints its name to the standard output. If the sandbox already existed, it
 is reset.
 
 * Populate the directory with the executable file of the program and its
 input files.
 
-* Call *isolate --run* to run the program. A single line describing the
+* Call `isolate --run` to run the program. A single line describing the
 status of the program is written to the standard error stream.
 
 * Fetch the output of the program from the directory.
 
-* Run *isolate --cleanup* to remove temporary files. Does nothing if the sandbox
+* Run `isolate --cleanup` to remove temporary files. Does nothing if the sandbox
 was already cleaned up.
 
 Please note that by default, the program is not allowed to start multiple
