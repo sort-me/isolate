@@ -27,7 +27,6 @@ is available online.
 
 To compile Isolate, you need headers for the `libcap` library (usually available in a `libcap-dev` package).
 
-You may need `a2x` (found in [AsciiDoc](https://asciidoc-py.github.io/a2x.1.html)) for building manual.
 But if you only want the isolate binary, you can just run `make isolate`
 
 Recommended system setup is described in sections INSTALLATION and REPRODUCIBILITY
